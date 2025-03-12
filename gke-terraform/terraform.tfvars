@@ -1,9 +1,0 @@
-gcp_project_id = "infra-core-453416-a1"
-gcp_region     = "us-central1"
-gke_cluster_name = "gke-cluster-saad"
-gke_location = "us-central1"
-gke_node_pool_name = "node-pool"
-gke_machine_type = "e2-medium"
-gke_min_nodes = 0
-gke_max_nodes = 3
-gke_disk_size = 20
