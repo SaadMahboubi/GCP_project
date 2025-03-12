@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: bigquery-cronjob
+spec:
+  schedule: "*/10 * * * *"  # Exécution toutes les 10 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: bigquery-sa  # 🔹 Utiliser un Service Account GCP avec accès BigQuery
+          containers:
+          - name: bigquery-runner
+            image: google/cloud-sdk:latest  # 🔹 Conteneur officiel de Google avec `bq` installé
+            command:
+              - "/bin/sh"
+              - "-c"
+              - |
+                bq query --use_legacy_sql=false "
+                SELECT COUNT(*) as row_count FROM `infra-core-453416-a1.test_saad.table_test`;
+                "
+          restartPolicy: OnFailure

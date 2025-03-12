@@ -20,17 +20,63 @@ Projet personnel de **migration et traitement des données sur Google Cloud Plat
 - 📌 **Monitoring avancé** : Debugging avec `kubectl logs`, suivi des coûts BigQuery.
 
 ## 🛠️ Setup & Installation
-1️⃣ **Cloner le repo**  
+**Cloner le repo**  
 ```bash
 git clone https://github.com/ton-repo.git && cd ton-repo
 ```
 
-2️⃣ **Déployer l'infrastructure avec Terraform** assurez vous d'être dans le bon dossier (composer-terraform ou gke-terraform)
+**Transférer les DAGs Airflow dans le Bucket GCS de Cloud Composer**
+```bash
+gsutil cp airflow/k8s_airflow_test.py gs://europe-west1-test-composer--5658f951-bucket/dags/
+
+gsutil cp airflow/bigquery_query_execution.py gs://europe-west1-test-composer--5658f951-bucket/dags/
+
+gsutil cp airflow/load_gcs_to_bigquery.py gs://europe-west1-test-composer--5658f951-bucket/dags/
+```
+
+**Vérifier que les fichiers ont bien été envoyés**
+```bash
+gsutil ls gs://europe-west1-test-composer--5658f951-bucket/dags/
+```
+
+**Envoyer un fichier CSV dans Google Cloud Storage (GCS)**
+```bash
+gsutil cp airflow/my_data.csv gs://europe-west1-test-composer--5658f951-bucket/data/
+```
+
+**Vérifier que le fichier a bien été envoyé**
+```bash
+gsutil cp airflow/my_data.csv gs://europe-west1-test-composer--5658f951-bucket/data/
+```
+
+**Avant d’exécuter Terraform, charge le fichier .env pour le composer**
+```bash
+source .env
+terraform init
+terraform apply -var="gcp_project_id=$GCP_PROJECT_ID" -var="gcp_region=$GCP_REGION" -var="composer_env_name=$COMPOSER_ENV_NAME"
+```
+
+**Avant d’exécuter Terraform, charge le fichier .env pour GKE**
+```bash
+source .env
+terraform init
+terraform apply -var="gcp_project_id=$GCP_PROJECT_ID" \
+                -var="gcp_region=$GCP_REGION" \
+                -var="gke_cluster_name=$GKE_CLUSTER_NAME" \
+                -var="gke_location=$GKE_LOCATION" \
+                -var="gke_node_pool_name=$GKE_NODE_POOL_NAME" \
+                -var="gke_machine_type=$GKE_MACHINE_TYPE" \
+                -var="gke_min_nodes=$GKE_MIN_NODES" \
+                -var="gke_max_nodes=$GKE_MAX_NODES" \
+                -var="gke_disk_size=$GKE_DISK_SIZE"
+```
+
+**Déployer l'infrastructure avec Terraform** assurez vous d'être dans le bon dossier (composer-terraform ou gke-terraform)
 ```bash
 terraform init && terraform apply
 ```
 
-3️⃣ **Vérifier les workloads Kubernetes**
+**Vérifier les workloads Kubernetes**
 ```bash
 kubectl get pods
 ```
