@@ -1,0 +1,36 @@
+# 🚀 Automatisation et gestion des workloads Data sur GCP
+
+## 📌 Description
+Projet personnel de **migration et traitement des données sur Google Cloud Platform (GCP)**, intégrant **BigQuery, GKE, Cloud Composer, Terraform et Kubernetes** pour automatiser et optimiser les workflows data.
+
+## 🔹 Stack & Technologies
+- **GKE (Google Kubernetes Engine)** : Déploiement & orchestration des workloads.
+- **BigQuery** : Stockage, transformation et optimisation des données.
+- **Cloud Composer (Airflow)** : Orchestration des pipelines de données.
+- **Terraform** : Déploiement automatisé de l’infrastructure GCP.
+- **GCS (Google Cloud Storage)** : Stockage des DAGs Airflow.
+- **Python, SQL, Kubernetes, CI/CD**.
+
+## 🚀 Features & Actions mises en place
+- 📌 **Déploiement Terraform** : Cluster GKE avec autoscaling, Cloud Composer.
+- 📌 **Automatisation BigQuery** : Ingestion et transformation via DAGs Airflow.
+- 📌 **Optimisation SQL** : Partitionnement, Clustering, Tables intermédiaires.
+- 📌 **Orchestration GKE** : `KubernetesPodOperator`, `CronJobs` pour requêtes BigQuery.
+- 📌 **Gestion des DAGs** : Stockage & versioning sur GCS.
+- 📌 **Monitoring avancé** : Debugging avec `kubectl logs`, suivi des coûts BigQuery.
+
+## 🛠️ Setup & Installation
+1️⃣ **Cloner le repo**  
+```bash
+git clone https://github.com/ton-repo.git && cd ton-repo
+```
+
+2️⃣ **Déployer l'infrastructure avec Terraform** assurez vous d'être dans le bon dossier (composer-terraform ou gke-terraform)
+```bash
+terraform init && terraform apply
+```
+
+3️⃣ **Vérifier les workloads Kubernetes**
+```bash
+kubectl get pods
+```
